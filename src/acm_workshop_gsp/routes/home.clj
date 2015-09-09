@@ -11,6 +11,26 @@
 (defn make-body [& body]
   (into [:div.col-xs-6.col-xs-offset-3] body))
 
+(def post
+  (clojure.string/join "\n"
+                       ["{:title \"Our Workshop Post\""
+                        " :layout :post"
+                        " :tags [\"ACM\" \"workshop\"]}"
+                        ""
+                        "### This is a header"
+                        "Hello, world!"]))
+
+(def cv
+  (clojure.string/join "\n"
+                       ["{:title \"Aleksander Eskilson - CV\""
+                        " :layout :page"
+                        " :page-index 1"
+                        " :navbar? true}"
+                        ""
+                        "### Aleksander Eskilson"
+                        "## Education"
+                        "University of Kansas, Bachelors in Computer Science, Minor in Mathematics"]))
+
 (def slides
   {:1 [:div
        (make-nav nil 2)
@@ -143,7 +163,7 @@
               [:code "$> cp -r resources/public/* .."]
               [:code "$> cd .."]]]
             [:li
-             [:p "Let's do all the usual repo things"]
+             [:p "Do all the usual repo things"]
              [:pre
               [:code "$> git init"]
               [:code "$> git add --all"]
@@ -153,9 +173,63 @@
              [:li
               [:p "Let it settle"]]
              [:li
-              [:p "Navigate to " [:a {:href "bdrillard.github.io"} "username.github.com"]]]]]
-
-           )]})
+              [:p "Navigate to " [:a {:href "bdrillard.github.io"} "username.github.com"]]]]])]
+    :12 [:div
+         (make-nav 11 13)
+         (make-body
+           [:h1.text-center "Creating Content"]
+           [:p "Cryogen (as do most Generators) distinguishes between 'Posts' and 'Pages'"]
+           [:ul
+            [:li "Posts as in Blog posts"]
+            [:li "Pages as in About or a CV page"]])]
+    :13 [:div
+         (make-nav 12 14)
+         (make-body
+           [:h1.text-center "Creating a Post"]
+           [:p "Making posts is easy"]
+           [:ol
+            [:li 
+             [:p "Create a new markdown file in the templates/md/posts directory:"]
+             [:pre
+              [:code "$> cd my-blog"]
+              [:code "$> gedit resources/templates/md/posts/2015-09-09-our-post.md"]]]
+            [:li
+             [:p "Fill it out with a header and content:"]
+             [:pre
+              [:code.clojure post]]]
+            [:li
+             [:p "Save"]]
+            [:li
+             [:p "If the ring server app is still running, it will automatically compile, if not, run it again"]
+             [:pre
+              [:code "$> lein ring server"]]
+             [:p "We can always preview our pages before pushing them"]]])]
+    :14 [:div
+         (make-nav 13 15)
+         (make-body
+           [:h1.text-center "Creating Pages"]
+           [:p "Pages are for specific content, we'll create a skeleton one to host a CV"]
+           [:ol
+            [:li
+             [:p "Create a new markdown file in the templates/md/pages directory:"]
+             [:pre
+              [:code "$> gedit resources/templates/md/pages/cv.md"]]]
+            [:li
+             [:p "Fill it out with a header and some initial content"]
+             [:pre
+              [:code.clojure cv]]]])]
+    :15 [:div
+         (make-nav 14 16)
+         (make-body
+           [:h1.text-center "Customization"]
+           [:p "Most page generators have some way to add themes"]
+           [:p "Honestly, Cryogen doesn't have an expansive theming community, like Jekyll"]
+           [:p "But the process we detailed for using a generator to make pages in Markdown, and then push them to Github is synonymous for pretty much all Static Page Generators"])]
+    :16 [:div
+         (make-nav 15 1)
+         (make-body
+           [:h1.text-center "End"]
+           [:h2.text-center "Questions"])]})
 
 (defn get-slide [slide-num]
   (layout/common (get slides (keyword slide-num))))

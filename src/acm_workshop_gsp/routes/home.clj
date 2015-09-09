@@ -107,11 +107,55 @@
         (make-nav 9 11)
         (make-body
           [:h1.text-center "Cryogen"]
-          [:p "Grab this startup script:"]
-          [:h2.text-center [:a {:href "https://github.com/bdrillard/acm-workshop-gsp/lein-script.sh"} ""]] ; should be RAW
-          )]
-   
-   })
+          [:ol
+           [:li 
+            [:p "Grab this startup script:"]
+            [:blockquote [:a {:href "https://raw.githubusercontent.com/bdrillard/acm-workshop-gsp/master/resources/scripts/lein-script.sh"}"https://raw.githubusercontent.com/bdrillard/acm-workshop-gsp/master/resources/scripts/lein-script.sh"]]]
+           [:li 
+            [:p "Make it executable, and run it"]
+            [:pre
+             [:code "$> chmod +x lein-script.sh"]
+             [:code "$> ./lein-script.sh"]
+             [:code "$> cd my-blog"]]]
+           [:li
+            [:p "Let's poke around the directories"]
+            [:pre
+             [:code "$> ls resources"]
+             [:code "$> ls resources/templates"]]]
+           [:li 
+            [:p "Change the value of :blog-prefix to the empty string, change other fields to suit you"]
+            [:pre [:code "$> gedit resources/templates/config.edn"]]]
+           [:li
+            [:p "Test the site"]
+            [:pre [:code "$> lein ring server"]]]])]
+    :11 [:div
+         (make-nav 10 12)
+         (make-body
+           [:h1.text-center "Whaa?"]
+           [:p "Cryogen just compiled the files in our resources/templates/md directory to HTML"]
+           [:pre
+            [:code "$> ls resources"]]
+           [:p "Let's push it to our repo:"]
+           [:ol
+            [:li 
+             [:p "Copy the contents of the 'public' directory into our github repo root"]
+             [:pre
+              [:code "$> cp -r resources/public/* .."]
+              [:code "$> cd .."]]]
+            [:li
+             [:p "Let's do all the usual repo things"]
+             [:pre
+              [:code "$> git init"]
+              [:code "$> git add --all"]
+              [:code "$> git commit -m \"first commit\""]
+              [:code "$> git remote add origin https://github.com/bdrillard/bdrillard.github.io.git"]
+              [:code "$> git push -u origin master"]]
+             [:li
+              [:p "Let it settle"]]
+             [:li
+              [:p "Navigate to " [:a {:href "bdrillard.github.io"} "username.github.com"]]]]]
+
+           )]})
 
 (defn get-slide [slide-num]
   (layout/common (get slides (keyword slide-num))))
